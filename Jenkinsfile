@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        'M2_HOME'
+    }
 
     stages {
         stage('Hello') {
@@ -12,7 +15,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Hello Build'
-                sleep 3
+                sh 'mvc clean'
+                sh 'mvc install'
+                sh 'mvc package'
             }
         }
         
