@@ -14,9 +14,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Hello Build'
-                sh 'mvc clean'
-                sh 'mvc install'
-                sh 'mvc package'
+                sh 'mvn clean'
+                sh 'mvn install'
+                sh 'mvn package'
             }
         }
         
