@@ -5,12 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-       
+        
         stage('Build') {
             steps {
                 echo 'Hello Build'
@@ -20,15 +15,22 @@ pipeline {
             }
         }
         
-        stage('Deploy') {
+        stage('Test') {
             steps {
-                echo 'Hello Deploy'
+                sh 'mvn test;
             }
         }
         
-        stage('Test') {
+        stage('Build and publish image') {
             steps {
-                echo 'Hello Test'
+                script {
+                 checkout scm
+                    docker.withRegistry('', 'dockerUserID') {
+                        def customimage = docker.build("kairitu16/hol-pipeline:${env.BUILD_ID}")
+                        customimage.push()
+                    }
+                }
+               
             }
         }
     }
